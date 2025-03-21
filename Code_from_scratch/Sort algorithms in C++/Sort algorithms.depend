@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1734652772 source:c:\users\hugon\onedrive\bureau\ensta paris 2a\sim202\sort algorithms\main.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+
+1738327419 source:c:\users\hugon\onedrive\bureau\méthode utile python&c\sort algorithms\main.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+
+1738328874 source:c:\users\hugon\onedrive\bureau\code utils\sort algorithms\main.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+
+1742588572 source:c:\users\hugon\onedrive\bureau\code utils\sort algorithms in c++\main.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+	<string.h>
+
