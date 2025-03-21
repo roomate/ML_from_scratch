@@ -19,12 +19,12 @@ class Graph:
     def build_graph(self):
         for i, row in enumerate(self.adjacency_matrix):
             self.graph[str(i)] = []
-            for j, line in enumerate(row):
-                if line == 1:
-                    if self.weighted:
-                        self.graph[str(i)] += [(str(j), line)]
-                    else:
-                        self.graph[str(i)] += [str(j)]
+            idx = np.nonzero(row)[0]
+            for id_ in idx:
+                if self.weighted:
+                    self.graph[str(i)] += [(str(id_), row[id_])]
+                else:
+                    self.graph[str(i)] += [str(id_)]
     
     def find_shortest_path_bfs(self, node_start, node_end):
         """
@@ -73,7 +73,6 @@ class Graph:
                     return path
                 path.remove(n)
         return False
-        
         
 
     def Djikstra_algorithm(self, start_node):
