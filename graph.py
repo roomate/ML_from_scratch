@@ -97,7 +97,29 @@ class Graph:
                         value[n] = value[v] + weight
                         prev[n] = v
         return value, prev
-    
+
+    def Bellman(self, start_node):
+        """
+        Implementation of Bellman-Ford algorithm. It has a time complexity of O(|V| |E|).
+        """
+        if not self.directed and self.weighted:
+            raise ValueError("Please, consider using Djikstra's algorithms")
+        elif not self.directed and not self.weighted:
+            raise ValueError("Please, consider using bfs algorithm.")
+
+        dist, prev = np.inf*np.ones((self.nb_node)), np.empty((self.nb_node))
+        dist[start_node] = 0
+
+        for _ in range(self.nb_node):
+            for i, row in enumerate(self.adjacency_matrix):
+                edge = np.nonzero(row)[0]
+                for e in edge:
+                    if dist[i] + row[e] < dist[e]:
+                        dist[e] = dist[i] + row[e]
+                        prev[e] = i
+        return dist, prev
+
+
 if __name__ == "__main__":
     Adj = [[0,1,0,1], [1,0,1,0], [0,1,0,1], [1, 0, 1, 0]]
     G = Graph(4, Adj)
