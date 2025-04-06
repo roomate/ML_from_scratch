@@ -1,99 +1,12 @@
+#include <stdio.h>
 #include <iostream>
-#include <cstdlib>
-#include<vector>
-#include<string.h>
-using namespace std;
-
-////////////////////////////////////////////////////////////
-/////////////////////Quick Sort/////////////////////////////
-////////////////////////////////////////////////////////////
-vector<float> quick_sort(const vector<float> L)
-{
-    if (L.size() <= 1) return L;
-    vector<float> Q;
-    vector<float> P;
-
-    float a = L[0];
-
-    for (int i = 1; i < L.size(); i++)
-    {
-        if (L[i] > a) {P.push_back(L[i]);}
-        else {Q.push_back(L[i]);}
-    }
-    Q = quick_sort(Q);
-    P = quick_sort(P);
-    Q.push_back(a); //Put back the pivot
-    Q.insert(Q.end(), P.begin(), P.end());
-    return Q;
-}
-
-////////////////////////////////////////////////////////////
-/////////////////////Insertion Sort/////////////////////////
-////////////////////////////////////////////////////////////
-
-vector<float> insertion_sort(const vector<float> L)
-{
-    vector<float> P(L);
-    for (int i = 1; i < L.size(); i++)
-    {
-        float tmp = P[i];
-        int j = i - 1;
-        while ((j >= 0) && (tmp < P[j]))
-        {
-            P[j + 1] = P[j];
-            P[j] = tmp;
-            --j;
-        }
-    }
-    return P;
-}
-
-////////////////////////////////////////////////////////////
-/////////////////////Merge Sort/////////////////////////////
-////////////////////////////////////////////////////////////
-
-vector<float> merge_lists(const vector<float> L1, const vector<float> L2)
-{
-    vector<float> P;
-    int i = 0;
-    int j = 0;
-    while (i < L1.size() && j < L2.size())
-    {
-        if (L1[i] < L2[j])
-        {
-            P.push_back(L1[i]);
-            ++i;
-        }
-        else
-        {
-            P.push_back(L2[j]);
-            ++j;
-        }
-    }
-    if (i == L1.size()) {P.insert(P.end(), L2.begin() + j, L2.end());}
-    else if (j == L2.size()) {P.insert(P.end(), L1.begin() + i, L1.end());}
-    return P;
-}
-
-vector<float> merge_sort(const vector<float> L)
-{
-    if (L.size() == 1) {return L;}
-
-    vector<float> L1;
-    vector<float> L2;
-
-    int i = 0;
-    vector<float>::const_iterator it;
-
-    for (it = L.begin(); it != L.end(); it++)
-    {
-        if (i < (L.size() + 1)/2) {L1.push_back(*it);}
-        else {L2.push_back(*it);}
-        ++i;
-    }
-
-    return merge_lists(merge_sort(L1), merge_sort(L2));
-}
+#include <string>
+#include <vector>
+#include <cstring>
+#include "heap_sort.hpp"
+#include "quick_sort.hpp"
+#include "insertion_sort.hpp"
+#include "merge_sort.hpp"
 
 void display(const vector<float> P)
 {
@@ -105,110 +18,24 @@ void display(const vector<float> P)
     cout<<endl;
 }
 
-////////////////////////////////////////////////////////////
-/////////////////////Heap Sort//////////////////////////////
-////////////////////////////////////////////////////////////
+char HEAP_SORT[15] = "heap_sort";
+char QUICK_SORT[15] = "quick_sort";
+char INSERTION_SORT[15] = "insertion_sort";
+char MERGE_SORT[15]= "merge_sort";
 
 
-bool is_heap(const vector<float> P, const string str)
+int main(int argc, char* argv[])
 {
-    int size_ = P.size()/2;
-    string state = "decrease";
-    string state2 = "increase";
-    if (str == state)
+    if (argc == 1)
     {
-        for (int i = 0; i < size_; i++)
-        {
-            if (P[2*i + 1] > P[i]) {return false;}
-            if ((2*i + 2 < size_) && (P[2*i + 2] > P[i])) {return false;}
-        }
+        printf("Not enough argument.");
+        return 1;
     }
-    else if (str == state2)
+    else if (argc > 2)
     {
-        for (int i = 0; i < size_; i++)
-        {
-            if (P[2*i + 1] < P[i]) {return false;}
-            if ((2*i + 2 < size_) && (P[2*i + 2] < P[i])) {return false;}
-        }
+        printf("too much arguments");
+        return 1;
     }
-    return true;
-}
-
-void browse_tree(vector<float>* L, int root, const int length, const string order)
-{
-    string incr = "increase";
-
-    string decr = "decrease";
-
-    if (order == incr)
-    {
-        while (2*root + 1 < length)
-        {
-            int child = 2*root + 1;
-            if ((child + 1 < length) && ((*L)[child + 1] > (*L)[child]))
-            {
-                child += 1; //Take the brother
-            }
-            if ((*L)[child] > (*L)[root])
-            {
-                float tmp = (*L)[root];
-
-                (*L)[root] = (*L)[child];
-                (*L)[child]= tmp;
-
-                root = child;
-            }
-            else {return;}
-        }
-    }
-    if (order == decr)
-    {
-        while (2*root + 1 < length)
-        {
-            int child = 2*root + 1;
-            if ((child + 1 < length) && ((*L)[child + 1] < (*L)[child]))
-            {
-                child += 1; //Take the brother
-            }
-            if ((*L)[child] < (*L)[root])
-            {
-                float tmp = (*L)[root];
-
-                (*L)[root] = (*L)[child];
-                (*L)[child]= tmp;
-
-                root = child;
-            }
-            else {return;}
-        }
-    }
-}
-
-void make_it_heap(vector<float>* L, const int length, const string order)
-{
-    int start = (length - 1 - 1)/2; //Start at the bottom of the tree
-    while (start >= 0)
-    {
-        browse_tree(L, start, length, order);
-        start -= 1;
-    }
-}
-
-void heap_sort(vector<float>* L, int length, const string order)
-{
-    make_it_heap(L, length, order);
-    while (length>0)
-    {
-        length -= 1;
-        float tmp = (*L)[0];
-        (*L)[0] = (*L)[length];
-        (*L)[length] = tmp;
-        make_it_heap(L, length, order);
-    }
-}
-
-int main()
-{
     string a;
     cin>>a;
 
@@ -217,6 +44,10 @@ int main()
 
     if (b == "D") {b = "decrease";}
     else if (b == "I") {b = "increase";}
+    else
+    {
+        printf("You should choose 'I' for ascending order, or 'D' for descending order.");
+    }
 
     vector<float> Q;
     vector<float> L(a.size());
@@ -224,7 +55,26 @@ int main()
     {
         L[i] = float(a[i]) - 48;
     }
-    heap_sort(&L, L.size(), b);
+    if (strcmp(argv[1], HEAP_SORT) == 0)
+    {
+        heap_sort(&L, L.size(), b);
+    }
+    else if (strcmp(argv[1], MERGE_SORT) == 0)
+    {
+        L = merge_sort(L);
+    }
+    else if (strcmp(argv[1], INSERTION_SORT) == 0)
+    {
+        L = insertion_sort(L);
+    }
+    else if (strcmp(argv[1], QUICK_SORT) == 0)
+    {
+        L = quick_sort(L);
+    }
+    else
+    {
+        printf("you should choose a sort algorithm among insertion, quick, merge and heap sort.");
+    }
     display(L);
     return 0;
 }
