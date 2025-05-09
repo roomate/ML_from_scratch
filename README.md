@@ -4,7 +4,7 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | Filename     | Algorithms  |  Returns:    |
 | :---        |    :----:   |          ---: |
 | tris.ipynb   | Quick sort, Merge sort, Insertion sort, Heap sort  | An array sorted |
-| KLR.ipynb  |  Kernel Logistic Regression  | A logistic classifer with kernel tricks  |
+| classification.ipynb  |  Kernel Logistic Regression, kernel k-NN  | A logistic classifer & k-Nearest Neighbours with kernel tricks  |
 | graham\_convex\_hull.py | Graham Algorithm | Convex hull of a cloud points |
 | graph.py | BFS, DFS, Dijkstra, Bellman | The shortest path between a source node and all others |
 | clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN | Set of cluster |
