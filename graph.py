@@ -75,10 +75,11 @@ class Graph:
         return False
         
 
-    def Djikstra_algorithm(self, start_node):
+    def Dijkstra_algorithm(self, start_node):
         """
         Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
         to all other nodes.
+        Requires: weightless graph.
         """
         if not self.weighted:
             raise ValueError("Please, consider using bfs algorithm for unweighted graphs")
@@ -101,9 +102,12 @@ class Graph:
     def Bellman(self, start_node):
         """
         Implementation of Bellman-Ford algorithm. It has a time complexity of O(|V| |E|).
+        Requires: weighted and directed graph. 
+            If not directed and weightless, use BFS.
+            If not directed but with weights: use Dijkstra's algorithm.
         """
         if not self.directed and self.weighted:
-            raise ValueError("Please, consider using Djikstra's algorithms")
+            raise ValueError("Please, consider using Dijkstra's algorithms")
         elif not self.directed and not self.weighted:
             raise ValueError("Please, consider using bfs algorithm.")
 
@@ -119,6 +123,11 @@ class Graph:
                         prev[e] = i
         return dist, prev
 
+    def Ford(self, start_node):
+        pass
+
+    def Kruskal(self, start_node):
+        pass
 
 if __name__ == "__main__":
     Adj = [[0,1,0,1], [1,0,1,0], [0,1,0,1], [1, 0, 1, 0]]
