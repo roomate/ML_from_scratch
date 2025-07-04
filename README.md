@@ -10,5 +10,5 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN | Set of cluster |
 | gmm.ipynb | Gaussian Mixture Model & Expectation-Maximization algorithm | Bayesian clustering |
 | random\_algos.ipynb | Poisson Process, Gaussian process, and Sampling | |
-| [main.ipynb from OT folder](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)|Sinkhorn's algorithm| An quasi-optimal map for the Schrodinger problem|
+| [main.ipynb (OT folder)]|[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
 | Lab\_population\_based\_optimization| Genetic algorithm for optimization of scalar objective. Bonus: Inspyred Package||An approximate minimizer|
