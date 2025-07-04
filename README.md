@@ -4,11 +4,13 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | Filename     | Algorithms  |  Returns:    |
 | :---        |    :----:   |          ---: |
 | tris.ipynb   | Quick sort, Merge sort, Insertion sort, Heap sort  | An array sorted |
-| classification.ipynb  |  Kernel Logistic Regression, kernel k-NN  | A logistic classifer & k-Nearest Neighbours with kernel tricks  |
+| classification.ipynb  |  Kernel Logistic Regression, kernel k-NN, [SVM](https://github.com/roomate/MVA-Projects/blob/master/Kernel_Methods/Homework/homework2.ipynb) | A logistic classifer & k-Nearest Neighbours with kernel tricks  |
+| dimension reduction | [PCA](https://github.com/roomate/MVA-Projects/blob/master/Kernel_Methods/Homework/homework2.ipynb) | Reduce data dimension |
+| Regression | [Ridge Regression](https://github.com/roomate/MVA-Projects/blob/master/Kernel_Methods/Homework/homework2.ipynb) | Regression on a set of data |
 | graham\_convex\_hull.py | Graham Algorithm | Convex hull of a cloud points |
 | graph.py | BFS, DFS, Dijkstra, Bellman | The shortest path between a source node and all others |
 | clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN | Set of cluster |
 | gmm.ipynb | Gaussian Mixture Model & Expectation-Maximization algorithm | Bayesian clustering |
 | random\_algos.ipynb | Poisson Process, Gaussian process, and Sampling | |
-| [main.ipynb (OT folder)]|[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
+| main.ipynb (OT folder)|[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
 | Lab\_population\_based\_optimization| Genetic algorithm for optimization of scalar objective. Bonus: Inspyred Package||An approximate minimizer|
