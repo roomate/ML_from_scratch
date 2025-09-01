@@ -7,6 +7,7 @@ Created on Sat Feb 22 13:30:31 2025
 from dataclasses import dataclass, field
 from queue import Queue
 import numpy as np
+import heapq
 
 @dataclass
 class Graph:
@@ -79,10 +80,10 @@ class Graph:
         """
         Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
         to all other nodes.
-        Requires: weightless graph.
+        Requires: positively weighted graph.
         """
         if not self.weighted:
-            raise ValueError("Please, consider using bfs algorithm for unweighted graphs")
+            raise ValueError("Please, consider using bfs or dfs algorithm for unweighted graphs")
         value = [np.inf for _ in range(self.nb_node)]
         unvisited = set(range(self.nb_node))
         value[start_node] = 0
@@ -99,11 +100,37 @@ class Graph:
                         prev[n] = v
         return value, prev
 
+    def Dijkstra_algorithm_with_heap(self, start_node):
+        """
+        Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
+        to all other nodes. This time, one uses a min-heap data structure to recover easily 
+        Requires: positively weighted graph.
+        """
+        if not self.weighted:
+            raise ValueError("Please, consider using bfs or dfs algorithm for unweighted graphs")
+        value = [(np.inf, i) for i in range(self.nb_node)]
+        unvisited = set(range(self.nb_node))
+        value[start_node] = (0, start_node)
+        prev = [None for _ in range(self.nb_node)]
+
+        while not unvisited.empty():
+            v = heapq.heappop(value) #Closest node to v
+            unvisited.remove(v)
+            neigh = self.graph[v]
+            for n, weight in neigh:
+                if n in unvisited:
+                    if value[n][0] > value[v][0] + weight:
+                        value[n][0] = value[v][0] + weight
+                        prev[n] = v
+            heapq.heapify(value)
+        return value, prev
+
+
     def Bellman(self, start_node):
         """
         Implementation of Bellman-Ford algorithm. It has a time complexity of O(|V| |E|).
         Requires: weighted and directed graph. 
-            If not directed and weightless, use BFS.
+            If not directed and weightless, use BFS or DFS.
             If not directed but with weights: use Dijkstra's algorithm.
         """
         if not self.directed and self.weighted:
