@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.colors as pltcolors
 import seaborn as sns
 
 
 def scatter_label_points(X,y, ax=None, title=''):
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(11, 7))
+        fig, ax = plt.subplots(1, figsize=(8, 5))
     colormap = np.array(['r', 'g', 'b'])
     ax.scatter(X[:,0], X[:,1], s=200, c=colormap[y],alpha=0.5)
     ax.set_title(title)
