@@ -11,7 +11,8 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | graph.py | BFS, DFS, Dijkstra, Bellman | The shortest path between a source node and all others |
 | clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN, OPTICS, K-Median | Set of cluster |
 | gmm.ipynb | Gaussian Mixture Model & Expectation-Maximization algorithm | Bayesian clustering |
-| random\_algos.ipynb | Poisson Process, Gaussian process, and Sampling | |
+| random\_algos.ipynb | Poisson Process, Gaussian process, and Sampling | Samples from a random process or a probability law. |
 | main.ipynb |[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
 | Lab\_population\_based\_optimization| Genetic algorithm for optimization of scalar objective. Bonus: Inspyred Package||An approximate minimizer| A candidate minimizer |
-| Levinson-Durbin.ipynb | Levinson-Durbin algorithm | Auto-regressive coefficients |
+| Levinson-Durbin.ipynb | Levinson-Durbin algorithm | Compute auto-regressive coefficients in an AR(p) Time Series model |
+| fft.ipynb | Fast Fourier Transform (Cooley-Tukey's and Rader's FFT) | Compute the FFT of vector of size N |
