@@ -9,7 +9,7 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | Regression | [Ridge Regression](https://github.com/roomate/MVA-Projects/blob/master/Kernel_Methods/Homework/homework2.ipynb), [Bayesian Linear Regression](https://github.com/roomate/MVA-Projects/blob/master/Theoretical%20Foundations%20of%20Deep%20Learning/TP1_Bayesian_Linear_Regression.ipynb), [Kriging](), SVR| Regression model |
 | graham\_convex\_hull.py | Graham Algorithm | Convex hull of a cloud points |
 | graph.py | BFS, DFS, Dijkstra, Bellman | The shortest path between a source node and all others |
-| clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN, OPTICS, K-Median | Set of cluster |
+| clustering.ipynb | Hierarchical clustering, kernel KMEAN, DBSCAN, OPTICS, K-Median, K-Medoid, Mean-Shift | Set of cluster |
 | gmm.ipynb | Gaussian Mixture Model & Expectation-Maximization algorithm | Bayesian clustering |
 | random\_algos.ipynb | Poisson Process, Gaussian process, and Sampling | Samples from a random process or a probability law. |
 | main.ipynb |[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
