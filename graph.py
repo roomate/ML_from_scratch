@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from queue import Queue
 import numpy as np
 import heapq
+import networkx
 
 @dataclass
 class Graph:
@@ -75,32 +76,7 @@ class Graph:
                 path.remove(n)
         return False
         
-
     def Dijkstra_algorithm(self, start_node):
-        """
-        Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
-        to all other nodes.
-        Requires: positively weighted graph.
-        """
-        if not self.weighted:
-            raise ValueError("Please, consider using bfs or dfs algorithm for unweighted graphs")
-        value = [np.inf for _ in range(self.nb_node)]
-        unvisited = set(range(self.nb_node))
-        value[start_node] = 0
-        prev = [None for _ in range(self.nb_node)]
-                
-        while not unvisited.empty():
-            v = np.argmin(value) #Closest node to v
-            unvisited.remove(v)
-            neigh = self.graph[v]
-            for n, weight in neigh:
-                if n in unvisited:
-                    if value[n] > value[v] + weight:
-                        value[n] = value[v] + weight
-                        prev[n] = v
-        return value, prev
-
-    def Dijkstra_algorithm_with_heap(self, start_node):
         """
         Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
         to all other nodes. This time, one uses a min-heap data structure to recover easily 
@@ -134,7 +110,7 @@ class Graph:
             If not directed but with weights: use Dijkstra's algorithm.
         """
         if not self.directed and self.weighted:
-            raise ValueError("Please, consider using Dijkstra's algorithms")
+            raise ValueError("Please, consider using Dijkstra's algorithm.")
         elif not self.directed and not self.weighted:
             raise ValueError("Please, consider using bfs algorithm.")
 
