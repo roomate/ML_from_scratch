@@ -15,4 +15,5 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | main.ipynb |[Sinkhorn's algorithm](https://github.com/roomate/MVA-Projects/blob/master/Optimal_Transport/main.ipynb)| A quasi-optimal map for the Schrodinger problem|
 | Lab\_population\_based\_optimization| Genetic algorithm for optimization of scalar objective. Bonus: Inspyred Package||An approximate minimizer| A candidate minimizer |
 | Levinson-Durbin.ipynb | Levinson-Durbin algorithm | Compute auto-regressive coefficients in an AR(p) Time Series model |
-| fft.ipynb | Fast Fourier Transform (Cooley-Tukey's and Rader's FFT) | Compute the FFT of vector of size N 
+| fft.ipynb | Fast Fourier Transform (Cooley-Tukey's and Rader's FFT) | Compute the FFT of vector of size N|
+| interpolation.ipynb | cardinal sinus interpolation | Construct an interpolating function|
