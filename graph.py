@@ -113,10 +113,19 @@ class Graph:
         value[start_node] = [0, start_node]
         prev = [None for _ in range(self.nb_node)]
 
+        graph_distance=[]
+        for idx, val in graph[start_node]:
+            idx=idx.astype(int)
+            graph_distance.append([idx, val])
+            value[idx][0]=val
+
+
         while not len(unvisited)==0:
             v=heapq.heappop(value) #Closest node to start_node
             val=v[0]
             idx=v[1]
+            graph_distance.append((idx, val))
+
             unvisited.remove(idx)
             neigh = self.graph[idx]
             value_array=np.array(value)
@@ -127,7 +136,7 @@ class Graph:
                         value[m.item()][0]=val+weight
                         prev[n]=idx
             heapq.heapify(value)
-        return value, prev
+        return graph_distance, prev
 
 
     def Bellman(self, start_node):
