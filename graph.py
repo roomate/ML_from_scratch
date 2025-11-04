@@ -75,7 +75,7 @@ class Graph:
                     return path
                 path.remove(n)
         return False
-        
+
     def Dijkstra_algorithm(self, start_node):
         """
         Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
@@ -89,15 +89,43 @@ class Graph:
         value[start_node] = (0, start_node)
         prev = [None for _ in range(self.nb_node)]
 
-        while not unvisited.empty():
-            v = heapq.heappop(value) #Closest node to v
-            unvisited.remove(v)
-            neigh = self.graph[v]
+        while not len(unvisited)==0:
+            v=heapq.heappop(value) #Closest node to start_node
+            unvisited.remove(v[1])
+            neigh=self.graph[str(v[1])]
             for n, weight in neigh:
                 if n in unvisited:
                     if value[n][0] > value[v][0] + weight:
                         value[n][0] = value[v][0] + weight
                         prev[n] = v
+            heapq.heapify(value)
+        return value, prev
+
+    def Dijkstra_algorithm(self, start_node):
+        """
+        Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_node
+        to all other nodes. This time, one uses a min-heap data structure to recover easily 
+        Requires: positively weighted graph. Time complexity scales as O(|V| + |E| log(|V|)).
+        """
+
+        value=[[np.inf, i] for i in range(self.nb_node)]
+        unvisited = set(range(self.nb_node))
+        value[start_node] = [0, start_node]
+        prev = [None for _ in range(self.nb_node)]
+
+        while not len(unvisited)==0:
+            v=heapq.heappop(value) #Closest node to start_node
+            val=v[0]
+            idx=v[1]
+            unvisited.remove(idx)
+            neigh = self.graph[idx]
+            value_array=np.array(value)
+            for n, weight in neigh:
+                if n in unvisited:
+                    m=np.where(value_array[:,1]==n)[0]
+                    if value[m.item()][0]>val+weight:
+                        value[m.item()][0]=val+weight
+                        prev[n]=idx
             heapq.heapify(value)
         return value, prev
 
