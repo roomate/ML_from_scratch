@@ -113,13 +113,8 @@ class Graph:
         value[start_node] = [0, start_node]
         prev = [None for _ in range(self.nb_node)]
 
+        heapq.heapify(value)
         graph_distance=[]
-        for idx, val in graph[start_node]:
-            idx=idx.astype(int)
-            graph_distance.append([idx, val])
-            value[idx][0]=val
-
-
         while not len(unvisited)==0:
             v=heapq.heappop(value) #Closest node to start_node
             val=v[0]
