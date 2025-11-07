@@ -51,6 +51,7 @@ class Point:
         plt.ylabel('y')
         plt.plot(X, Y, linestyle = '-', label = 'convex hull')
         plt.legend()
+        plt.show()
 
 
 
@@ -92,4 +93,5 @@ if __name__=='__main__':
     stack = graham(List_point)
     
     Point.display(List_point)
+
     Point.display_convex_hull(stack)
