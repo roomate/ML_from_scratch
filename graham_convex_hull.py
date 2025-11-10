@@ -51,7 +51,7 @@ class Point:
         plt.ylabel('y')
         plt.plot(X, Y, linestyle = '-', label = 'convex hull')
         plt.legend()
-
+        plt.show()
 
 
 def graham(L: np.ndarray[Point]):
