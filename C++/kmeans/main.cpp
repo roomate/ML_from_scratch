@@ -11,7 +11,7 @@ int main()
     std::uniform_int_distribution<int> distribution_int(0,3);
     
     Point P(2);
-    std::vector<Point> L(10000);
+    std::vector<Point> L(100000);
     std::vector<Point>::iterator it;
     int i=0;
     for (it=L.begin(); it<L.end(); ++it)
@@ -22,9 +22,7 @@ int main()
         i++;
     }
     std::cout<<L.size()<<std::endl;
-    KMEAN kmean(25, 1000, .00000001, L);
+    KMEAN kmean(50, 1000, .00000001, L);
     kmean.fit();
-    // kmean.E_step();
-    // kmean.display_clusters();
     return 0;
 }
