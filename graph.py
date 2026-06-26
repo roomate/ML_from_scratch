@@ -78,31 +78,6 @@ class Graph:
 
     def Dijkstra_algorithm(self, start_node):
         """
-        Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_nodes
-        to all other nodes. This time, one uses a min-heap data structure to recover easily 
-        Requires: positively weighted graph.
-        """
-        if not self.weighted:
-            raise ValueError("Please, consider using bfs or dfs algorithm for unweighted graphs")
-        value = [(np.inf, i) for i in range(self.nb_node)]
-        unvisited = set(range(self.nb_node))
-        value[start_node] = (0, start_node)
-        prev = [None for _ in range(self.nb_node)]
-
-        while not len(unvisited)==0:
-            v=heapq.heappop(value) #Closest node to start_node
-            unvisited.remove(v[1])
-            neigh=self.graph[str(v[1])]
-            for n, weight in neigh:
-                if n in unvisited:
-                    if value[n][0] > value[v][0] + weight:
-                        value[n][0] = value[v][0] + weight
-                        prev[n] = v
-            heapq.heapify(value)
-        return value, prev
-
-    def Dijkstra_algorithm(self, start_node):
-        """
         Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_node
         to all other nodes. This time, one uses a min-heap data structure to recover easily 
         Requires: positively weighted graph. Time complexity scales as O(|V| + |E| log(|V|)).
