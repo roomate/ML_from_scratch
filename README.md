@@ -17,4 +17,4 @@ This repo contains some code I write on my free time. It has two objectives: fir
 | Levinson-Durbin.ipynb | Levinson-Durbin algorithm | Compute auto-regressive coefficients in an AR(p) Time Series model |
 | fft.ipynb | Fast Fourier Transform (Cooley-Tukey's and Rader's FFT) | Compute the FFT of vector of size N|
 | interpolation.ipynb | cardinal sinus interpolation | Construct an interpolating function|
-| outlier\_detection.ipynb | OC-SVM | Detect if a point is an outlier|
+| outlier\_detection.ipynb | OC-SVM, LOF | Detect if a point is an outlier|
