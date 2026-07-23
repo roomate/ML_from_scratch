@@ -8,7 +8,6 @@ from dataclasses import dataclass, field
 from queue import Queue
 import numpy as np
 import heapq
-import networkx
 
 @dataclass
 class Graph:
@@ -19,15 +18,19 @@ class Graph:
     graph: dict() = field(default_factory=dict)
 
     def build_graph(self):
-        for i, row in enumerate(self.adjacency_matrix):
-            self.graph[str(i)] = []
-            idx = np.nonzero(row)[0]
-            for id_ in idx:
-                if self.weighted:
-                    self.graph[str(i)] += [(str(id_), row[id_])]
-                else:
-                    self.graph[str(i)] += [str(id_)]
-    
+        if self.weighted:
+            for i, row in enumerate(self.adjacency_matrix):
+                self.graph.update({i: []})
+                idx = np.nonzero(row)[0]
+                for id_ in idx:
+                        self.graph[i] += [(row[id_], id_)]
+        else:
+            for i, row in enumerate(self.adjacency_matrix):
+                self.graph.update({i: []})
+                idx = np.nonzero(row)[0]
+                for id_ in idx:
+                    self.graph[i] += [id_]
+
     def find_shortest_path_bfs(self, node_start, node_end):
         """
         Find shortest path between node_start and node_end using breadth-first-search strategy.
@@ -39,17 +42,17 @@ class Graph:
             queue = Queue()
             queue.put(node_start)
             visited=set()
-            prev = [None for _ in range(nb_node)]
+            prev = [None]*self.nb_of_node
             while not queue.empty():
                 node = queue.get()
                 if node == node_end:
                     return prev
-                for n in self.graph[str(node)]:
+                for n in self.graph[node]:
                     if n not in visited:
                         visited.add(n)
                         prev[n] = node
                         queue.put(n)
-        
+
         prev = shortest_path(node_start, node_end, self.nb_of_node)
         path = [node_end]
         node = node_end
@@ -63,10 +66,12 @@ class Graph:
         Find shortest path between node_start and node_end using depth-first-search strategy.
         The algorithm's time complexity scales as O(|V| + |E|)
         """
+        if self.weighted:
+            raise ValueError("The graph should be unweighted")
         assert self.graph != {}, "You should build the graph first"
         if node_start == node_end:
             return True
-        neighbour = self.graph[str(node_start)]
+        neighbour = self.graph[node_start]
         for n in neighbour:
             if n not in visited:
                 visited.add(n)
@@ -83,30 +88,49 @@ class Graph:
         Requires: positively weighted graph. Time complexity scales as O(|V| + |E| log(|V|)).
         """
 
-        value=[[np.inf, i] for i in range(self.nb_node)]
-        unvisited = set(range(self.nb_node))
+        value=[[np.inf, i] for i in range(self.nb_of_node)]
+        unvisited = set(range(self.nb_of_node))
         value[start_node] = [0, start_node]
-        prev = [None for _ in range(self.nb_node)]
+        paths=[[start_node]]*self.nb_of_node
 
         heapq.heapify(value)
-        graph_distance=[]
-        while not len(unvisited)==0:
-            v=heapq.heappop(value) #Closest node to start_node
-            val=v[0]
-            idx=v[1]
-            graph_distance.append((idx, val))
-
+        while len(unvisited)>0:
+            v=heapq.heappop(value)
+            dist, idx=v
             unvisited.remove(idx)
-            neigh = self.graph[idx]
-            value_array=np.array(value)
-            for n, weight in neigh:
-                if n in unvisited:
-                    m=np.where(value_array[:,1]==n)[0]
-                    if value[m.item()][0]>val+weight:
-                        value[m.item()][0]=val+weight
-                        prev[n]=idx
+            neighbors=self.graph[idx]
+            for val, node in neighbors:
+                if node in unvisited:
+                    k = np.where(np.array(value)[:,1]==node)[0].item()
+                    if value[k][0] > dist + val:
+                        value[k][0] = dist + val
+                        paths[k] = paths[idx]+[idx]
             heapq.heapify(value)
-        return graph_distance, prev
+        return value, paths
+
+    def Dijkstra_algorithm_optimized(self, start_node):
+        """
+        Apply Dijsktra's algorithm on the graph. Find all the shortest path from start_node
+        to all other nodes. This time, one uses a min-heap data structure to recover easily 
+        Requires: positively weighted graph. Time complexity scales as O(|V| + |E| log(|V|)).
+        """
+        value=[np.inf]*self.nb_of_node
+        start_node=int(start_node)
+        value[start_node] = 0
+        heap=[[0, start_node]]
+        paths=[[start_node]]*self.nb_of_node
+        while len(heap)>0:
+            val, idx=heapq.heappop(heap)
+            if value[idx]<val:
+                continue
+            neighbours=self.graph[idx]
+            for node, weight in neighbours:
+                if value[node]>val+weight:
+                    value[node]=val+weight
+                    heapq.heappush(heap, [node, value[node]])
+                    paths[node]=paths[idx] + [idx]
+        return value, paths
+
 
 
     def Bellman(self, start_node):
@@ -140,8 +164,45 @@ class Graph:
         pass
 
 if __name__ == "__main__":
-    Adj = [[0,1,0,1], [1,0,1,0], [0,1,0,1], [1, 0, 1, 0]]
-    G = Graph(4, Adj)
-    G.build_graph()
-    path = G.find_shortest_path_dfs('0', '2', ['0'], set('0'))
-    print(path)
+    import matplotlib.pyplot as plt
+    import time
+    N=[5, 10, 100, 50, 100]
+    Time_DFS=[]
+    Time_BFS=[]
+    Time_Dijkstra=[]
+    Time_Dijkstra_optimized=[]
+    for n in N:
+        Adj = np.random.randint(low=0, high=3, size=(n, n))
+        G = Graph(n, Adj)
+        G.build_graph()
+
+        t0=time.time()
+        path = G.find_shortest_path_dfs(0, 2, [0], set([0]))
+        t1=time.time()
+        Time_DFS.append(t1-t0)
+
+        t0=time.time()
+        path = G.find_shortest_path_bfs(0, 2)
+        t1=time.time()
+        Time_BFS.append(t1-t0)
+    
+        G.weighted=True
+        G.build_graph()
+        t0=time.time()
+        val, paths = G.Dijkstra_algorithm(0)
+        t1=time.time()
+        Time_Dijkstra.append(t1-t0)
+
+        t0=time.time()
+        val, paths = G.Dijkstra_algorithm_optimized(0)
+        t1=time.time()
+        Time_Dijkstra_optimized.append(t1-t0)
+    
+    plt.plot(Time_DFS, label="Depth-First Search")
+    plt.plot(Time_BFS, label="Breadth-First Search")
+    plt.plot(Time_Dijkstra, label="Dijkstra algorithm")
+    plt.plot(Time_Dijkstra_optimized, label="Heap optimized Dijkstra algorithm")
+    plt.yscale("log")
+    plt.legend()
+    plt.show()
+    
